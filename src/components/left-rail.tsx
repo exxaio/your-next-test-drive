@@ -13,11 +13,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
 } from '@/components/ui/sheet';
+import { SidebarToggle } from '@/components/sidebar-toggle';
 import {
   LayoutDashboard,
   Settings2,
@@ -25,12 +25,12 @@ import {
   Mic2,
   FileAudio,
   HelpCircle,
-  PanelLeftClose,
   PanelLeftOpen,
   AudioWaveform,
   Plus,
-  Menu,
 } from 'lucide-react';
+
+export { SidebarToggle, type SidebarToggleProps } from '@/components/sidebar-toggle';
 
 
 
@@ -127,6 +127,7 @@ function NavItemRow({
   );
 }
 
+
 function SidebarInner({
   isExpanded,
   onToggle,
@@ -143,7 +144,7 @@ function SidebarInner({
       {/* Header: logo + toggle */}
       <div
         className={cn(
-          'flex h-14 shrink-0 items-center border-b border-white/8',
+          'flex h-14 shrink-0 items-center border-b border-white/8 transition-all',
           isExpanded ? 'px-3 justify-between' : 'justify-center',
         )}
       >
@@ -155,40 +156,30 @@ function SidebarInner({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -8 }}
               transition={{ duration: 0.15 }}
-              className="flex items-center gap-2.5 overflow-hidden"
+              className="flex items-center overflow-hidden"
             >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600">
-                <AudioWaveform className="h-4 w-4 text-white" />
-              </span>
-              <span className="font-heading truncate text-base font-bold tracking-tight">
-                Voxudio
-              </span>
+              <Link
+                href="/dashboard"
+                onClick={onNavClick}
+                className="group flex items-center gap-2.5 rounded-lg p-0.5 outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
+              >
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-sm transition-transform group-hover:scale-105">
+                  <AudioWaveform className="h-4 w-4 text-white" />
+                </span>
+                <span className="font-heading truncate text-base font-bold tracking-tight transition-colors group-hover:text-violet-400">
+                  Voxudio
+                </span>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
 
-        <Tooltip>
-          <TooltipTrigger
-            render={
-              <Button
-                id="sidebar-toggle"
-                variant="ghost"
-                size="icon-sm"
-                onClick={onToggle}
-                className="text-muted-foreground hover:text-foreground shrink-0"
-              />
-            }
-          >
-            {isExpanded ? (
-              <PanelLeftClose className="h-4 w-4" />
-            ) : (
-              <PanelLeftOpen className="h-4 w-4" />
-            )}
-          </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={8}>
-            {isExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
-          </TooltipContent>
-        </Tooltip>
+        <SidebarToggle
+          id="sidebar-toggle"
+          isExpanded={isExpanded}
+          onToggle={onToggle}
+          side="right"
+        />
       </div>
 
       {/* New chat / action button */}
@@ -254,6 +245,34 @@ function SidebarInner({
 export function LeftRail() {
   const { isExpanded, isMobileOpen, toggle, setMobileOpen } = useSidebar();
 
+  // Keyboard shortcut (⌘B or Ctrl+B / ⌘[ or Ctrl+[) like Claude and ChatGPT
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing in form inputs
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === 'b' || e.key === '[')) {
+        e.preventDefault();
+        if (isMobileOpen) {
+          setMobileOpen(false);
+        } else {
+          toggle();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggle, isMobileOpen, setMobileOpen]);
+
   return (
     <TooltipProvider delay={200}>
       {/* Desktop sidebar */}
@@ -262,24 +281,34 @@ export function LeftRail() {
         initial={{ x: -20, opacity: 0, width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH }}
         animate={{ x: 0, opacity: 1, width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH }}
         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-        className="bg-background/90 fixed top-0 bottom-0 left-0 z-40 hidden flex-col border-r border-white/8 backdrop-blur-md md:flex"
+        className="bg-background/95 fixed top-0 bottom-0 left-0 z-50 hidden flex-col border-r border-white/8 backdrop-blur-md md:flex"
       >
         <SidebarInner isExpanded={isExpanded} onToggle={toggle} />
       </motion.aside>
 
-      {/* Mobile hamburger button (visible on small screens) */}
-      <button
-        id="mobile-sidebar-trigger"
-        onClick={() => setMobileOpen(true)}
-        className="bg-background/80 fixed top-3.5 left-4 z-50 flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground backdrop-blur-sm transition hover:text-foreground md:hidden"
-        aria-label="Open navigation"
-      >
-        <Menu className="h-4 w-4" />
-      </button>
+      {/* Mobile toggle button (visible on small screens <md) */}
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <button
+              id="mobile-sidebar-trigger"
+              onClick={() => setMobileOpen(true)}
+              className="bg-background/80 fixed top-2.5 left-3.5 z-50 flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 text-muted-foreground shadow-sm backdrop-blur-md transition-all hover:bg-accent/80 hover:text-foreground active:scale-95 md:hidden focus-visible:ring-2 focus-visible:ring-violet-500/50 outline-none"
+              aria-label="Open sidebar"
+              aria-expanded={isMobileOpen}
+            />
+          }
+        >
+          <PanelLeftOpen className="h-4 w-4" />
+        </TooltipTrigger>
+        <TooltipContent side="right" sideOffset={8}>
+          Open sidebar
+        </TooltipContent>
+      </Tooltip>
 
       {/* Mobile sheet */}
       <Sheet open={isMobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" showCloseButton={false} className="w-64 p-0">
+        <SheetContent side="left" showCloseButton={false} className="w-72 border-r border-white/8 bg-background/95 p-0 backdrop-blur-xl">
           <SidebarInner
             isExpanded={true}
             onToggle={() => setMobileOpen(false)}
@@ -291,16 +320,20 @@ export function LeftRail() {
   );
 }
 
-export function MobileSidebarTrigger() {
-  const { setMobileOpen } = useSidebar();
+export function MobileSidebarTrigger({ className }: { className?: string }) {
+  const { isMobileOpen, setMobileOpen } = useSidebar();
   return (
     <button
       id="mobile-sidebar-trigger"
       onClick={() => setMobileOpen(true)}
-      className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition hover:text-foreground md:hidden"
-      aria-label="Open navigation"
+      className={cn(
+        'flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-background/80 text-muted-foreground shadow-sm backdrop-blur-md transition-all hover:bg-accent/80 hover:text-foreground active:scale-95 md:hidden focus-visible:ring-2 focus-visible:ring-violet-500/50 outline-none',
+        className,
+      )}
+      aria-label="Open sidebar"
+      aria-expanded={isMobileOpen}
     >
-      <Menu className="h-4 w-4" />
+      <PanelLeftOpen className="h-4 w-4" />
     </button>
   );
 }
