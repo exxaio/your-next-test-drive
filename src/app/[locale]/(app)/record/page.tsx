@@ -9,8 +9,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Mic, MicOff, Video, VideoOff, Settings, RotateCcw, FileAudio, Clock, CheckCircle2 } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
+  Mic,
+  MicOff,
+  Video,
+  VideoOff,
+  Settings,
+  RotateCcw,
+  FileAudio,
+  Clock,
+  CheckCircle2,
+} from 'lucide-react';
 
 export default function RecordPage() {
   return (
@@ -37,7 +53,6 @@ export default function RecordPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-
           {/* Device selection */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
@@ -218,7 +233,7 @@ export default function RecordPage() {
                   </div>
                   <div>
                     <p className="text-sm font-medium">{recording.name}</p>
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="text-muted-foreground flex items-center gap-3 text-xs">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {recording.duration}

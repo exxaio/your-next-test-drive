@@ -9,7 +9,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Search, BookOpen, MessageSquare, Mail, ExternalLink, ChevronRight, HelpCircle, Lightbulb, Shield, Zap } from 'lucide-react';
+import {
+  Search,
+  BookOpen,
+  MessageSquare,
+  Mail,
+  ExternalLink,
+  ChevronRight,
+  HelpCircle,
+  Lightbulb,
+  Shield,
+  Zap,
+} from 'lucide-react';
 
 export default function HelpPage() {
   return (
@@ -26,7 +37,7 @@ export default function HelpPage() {
       <Card className="bg-card border-white/8">
         <CardContent className="p-4">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               id="search-help"
               placeholder="Search help articles, FAQs, and documentation..."
@@ -129,23 +140,28 @@ export default function HelpPage() {
           {[
             {
               question: 'How do I start a new recording?',
-              answer: 'Navigate to the Record page in the dashboard. Configure your audio and video devices, then click "Start Recording" to begin capturing.',
+              answer:
+                'Navigate to the Record page in the dashboard. Configure your audio and video devices, then click "Start Recording" to begin capturing.',
             },
             {
               question: 'What file formats are supported for transcription?',
-              answer: 'We support MP3, WAV, M4A, MP4, WebM, and MOV files. For best results, use high-quality audio recordings.',
+              answer:
+                'We support MP3, WAV, M4A, MP4, WebM, and MOV files. For best results, use high-quality audio recordings.',
             },
             {
               question: 'How accurate is the transcription?',
-              answer: 'Our AI-powered transcription achieves 95%+ accuracy for clear audio. Accuracy may vary based on audio quality, background noise, and speaker clarity.',
+              answer:
+                'Our AI-powered transcription achieves 95%+ accuracy for clear audio. Accuracy may vary based on audio quality, background noise, and speaker clarity.',
             },
             {
               question: 'Can I collaborate with others on projects?',
-              answer: 'Yes! You can invite team members to your projects, assign roles, and collaborate on transcriptions in real-time.',
+              answer:
+                'Yes! You can invite team members to your projects, assign roles, and collaborate on transcriptions in real-time.',
             },
             {
               question: 'Is my data secure and private?',
-              answer: 'Absolutely. We use end-to-end encryption for all recordings and transcriptions. Your data is never shared with third parties.',
+              answer:
+                'Absolutely. We use end-to-end encryption for all recordings and transcriptions. Your data is never shared with third parties.',
             },
           ].map((faq, index) => (
             <div key={index}>
@@ -238,8 +254,8 @@ export default function HelpPage() {
             className="text-violet-400 underline underline-offset-2 hover:text-violet-300"
           >
             support@voxudio.com
-          </a>
-          {' '}or reach out through our community Discord server.
+          </a>{' '}
+          or reach out through our community Discord server.
         </AlertDescription>
       </Alert>
     </div>

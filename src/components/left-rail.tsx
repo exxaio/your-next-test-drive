@@ -13,10 +13,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { Separator } from '@/components/ui/separator';
-import {
-  Sheet,
-  SheetContent,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { SidebarToggle } from '@/components/sidebar-toggle';
 import {
   LayoutDashboard,
@@ -30,9 +27,10 @@ import {
   Plus,
 } from 'lucide-react';
 
-export { SidebarToggle, type SidebarToggleProps } from '@/components/sidebar-toggle';
-
-
+export {
+  SidebarToggle,
+  type SidebarToggleProps,
+} from '@/components/sidebar-toggle';
 
 type NavItem = {
   label: string;
@@ -127,7 +125,6 @@ function NavItemRow({
   );
 }
 
-
 function SidebarInner({
   isExpanded,
   onToggle,
@@ -145,7 +142,7 @@ function SidebarInner({
       <div
         className={cn(
           'flex h-14 shrink-0 items-center border-b border-white/8 transition-all',
-          isExpanded ? 'px-3 justify-between' : 'justify-center',
+          isExpanded ? 'justify-between px-3' : 'justify-center',
         )}
       >
         <AnimatePresence initial={false}>
@@ -213,7 +210,12 @@ function SidebarInner({
       </div>
 
       {/* Main nav */}
-      <nav className={cn('flex flex-1 flex-col gap-0.5 overflow-y-auto', isExpanded ? 'px-2' : 'items-center px-1.5')}>
+      <nav
+        className={cn(
+          'flex flex-1 flex-col gap-0.5 overflow-y-auto',
+          isExpanded ? 'px-2' : 'items-center px-1.5',
+        )}
+      >
         {navItems.map((item) => (
           <NavItemRow
             key={item.href}
@@ -226,8 +228,15 @@ function SidebarInner({
       </nav>
 
       {/* Bottom nav */}
-      <div className={cn('pb-3', isExpanded ? 'px-2' : 'flex flex-col items-center px-1.5')}>
-        <Separator className={cn('mb-2 opacity-30', isExpanded ? 'mx-1' : 'w-6')} />
+      <div
+        className={cn(
+          'pb-3',
+          isExpanded ? 'px-2' : 'flex flex-col items-center px-1.5',
+        )}
+      >
+        <Separator
+          className={cn('mb-2 opacity-30', isExpanded ? 'mx-1' : 'w-6')}
+        />
         {bottomItems.map((item) => (
           <NavItemRow
             key={item.href}
@@ -259,7 +268,10 @@ export function LeftRail() {
         return;
       }
 
-      if ((e.metaKey || e.ctrlKey) && (e.key.toLowerCase() === 'b' || e.key === '[')) {
+      if (
+        (e.metaKey || e.ctrlKey) &&
+        (e.key.toLowerCase() === 'b' || e.key === '[')
+      ) {
         e.preventDefault();
         if (isMobileOpen) {
           setMobileOpen(false);
@@ -278,8 +290,16 @@ export function LeftRail() {
       {/* Desktop sidebar */}
       <motion.aside
         id="left-rail"
-        initial={{ x: -20, opacity: 0, width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH }}
-        animate={{ x: 0, opacity: 1, width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH }}
+        initial={{
+          x: -20,
+          opacity: 0,
+          width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH,
+        }}
+        animate={{
+          x: 0,
+          opacity: 1,
+          width: isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH,
+        }}
         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
         className="bg-background/95 fixed top-0 bottom-0 left-0 z-50 hidden flex-col border-r border-white/8 backdrop-blur-md md:flex"
       >
@@ -293,7 +313,7 @@ export function LeftRail() {
             <button
               id="mobile-sidebar-trigger"
               onClick={() => setMobileOpen(true)}
-              className="bg-background/80 fixed top-2.5 left-3.5 z-50 flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 text-muted-foreground shadow-sm backdrop-blur-md transition-all hover:bg-accent/80 hover:text-foreground active:scale-95 md:hidden focus-visible:ring-2 focus-visible:ring-violet-500/50 outline-none"
+              className="bg-background/80 text-muted-foreground hover:bg-accent/80 hover:text-foreground fixed top-2.5 left-3.5 z-50 flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 shadow-sm backdrop-blur-md transition-all outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 active:scale-95 md:hidden"
               aria-label="Open sidebar"
               aria-expanded={isMobileOpen}
             />
@@ -308,7 +328,11 @@ export function LeftRail() {
 
       {/* Mobile sheet */}
       <Sheet open={isMobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" showCloseButton={false} className="w-72 border-r border-white/8 bg-background/95 p-0 backdrop-blur-xl">
+        <SheetContent
+          side="left"
+          showCloseButton={false}
+          className="bg-background/95 w-72 border-r border-white/8 p-0 backdrop-blur-xl"
+        >
           <SidebarInner
             isExpanded={true}
             onToggle={() => setMobileOpen(false)}
@@ -327,7 +351,7 @@ export function MobileSidebarTrigger({ className }: { className?: string }) {
       id="mobile-sidebar-trigger"
       onClick={() => setMobileOpen(true)}
       className={cn(
-        'flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 bg-background/80 text-muted-foreground shadow-sm backdrop-blur-md transition-all hover:bg-accent/80 hover:text-foreground active:scale-95 md:hidden focus-visible:ring-2 focus-visible:ring-violet-500/50 outline-none',
+        'bg-background/80 text-muted-foreground hover:bg-accent/80 hover:text-foreground flex h-9 w-9 items-center justify-center rounded-xl border border-white/8 shadow-sm backdrop-blur-md transition-all outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 active:scale-95 md:hidden',
         className,
       )}
       aria-label="Open sidebar"
