@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { staggerContainer, fadeInUp } from '@/lib/motion';
+import { fadeInUp } from '@/lib/motion';
 
 interface StaggerContainerProps {
   children: React.ReactNode;

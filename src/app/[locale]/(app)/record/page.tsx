@@ -19,8 +19,6 @@ import {
 import {
   Mic,
   MicOff,
-  Video,
-  VideoOff,
   Settings,
   RotateCcw,
   FileAudio,
