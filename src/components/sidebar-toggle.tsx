@@ -32,13 +32,10 @@ export function SidebarToggle({
   const isExpanded = controlledExpanded ?? sidebar.isExpanded;
   const onToggle = controlledToggle ?? sidebar.toggle;
 
-  const [isMac, setIsMac] = React.useState(true);
-
-  React.useEffect(() => {
-    if (typeof window !== 'undefined' && navigator?.userAgent) {
-      setIsMac(/(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent));
-    }
-  }, []);
+  const [isMac] = React.useState(() => {
+    if (typeof window === 'undefined' || !navigator?.userAgent) return true;
+    return /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent);
+  });
 
   const shortcutText = isMac ? '⌘B' : 'Ctrl+B';
   const label = isExpanded ? 'Close sidebar' : 'Open sidebar';
