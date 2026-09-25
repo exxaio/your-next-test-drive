@@ -14,20 +14,22 @@ export function StaggerContainer({
   className,
   staggerDelay = 0.1,
 }: StaggerContainerProps) {
+  const customVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: staggerDelay,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
   return (
     <motion.div
       initial="hidden"
       animate="visible"
-      variants={{
-        ...staggerContainer,
-        visible: {
-          ...staggerContainer.visible,
-          transition: {
-            ...staggerContainer.visible.transition,
-            staggerChildren: staggerDelay,
-          },
-        },
-      }}
+      variants={customVariants}
       className={className}
     >
       {children}

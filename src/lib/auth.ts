@@ -37,6 +37,9 @@ export async function loginAction(
   await createSession(PLACEHOLDER_USER.id, PLACEHOLDER_USER.email);
   const locale = await getLocale();
   redirect({ href: '/dashboard', locale });
+  // TypeScript doesn't recognize that redirect() never returns
+  // eslint-disable-next-line no-unreachable
+  return null;
 }
 
 export async function logoutAction() {
