@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { useSidebar } from '@/lib/sidebar-context';
 import { Button } from '@/components/ui/button';
+import { Kbd } from '@/components/ui/kbd';
 import {
   Tooltip,
   TooltipContent,
@@ -54,7 +55,7 @@ export function SidebarToggle({
             aria-label={label}
             aria-expanded={isExpanded}
             className={cn(
-              'relative rounded-lg text-muted-foreground transition-all duration-150',
+              'text-muted-foreground relative rounded-lg transition-all duration-150',
               'hover:bg-accent/80 hover:text-foreground active:scale-95',
               'focus-visible:ring-2 focus-visible:ring-violet-500/50',
               className,
@@ -79,14 +80,13 @@ export function SidebarToggle({
           </motion.span>
         </AnimatePresence>
       </TooltipTrigger>
-      <TooltipContent side={side} sideOffset={8} className="flex items-center gap-1.5">
+      <TooltipContent
+        side={side}
+        sideOffset={8}
+        className="flex items-center gap-1.5"
+      >
         <span>{label}</span>
-        <kbd
-          data-slot="kbd"
-          className="rounded border border-white/10 bg-background/30 px-1 py-0.5 font-mono text-[10px] text-muted-foreground"
-        >
-          {shortcutText}
-        </kbd>
+        <Kbd>{shortcutText}</Kbd>
       </TooltipContent>
     </Tooltip>
   );

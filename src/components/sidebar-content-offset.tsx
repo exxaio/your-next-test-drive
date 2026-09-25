@@ -11,7 +11,11 @@ const COLLAPSED_WIDTH = 56;
  * Wraps main content and applies animated left padding to match the sidebar width.
  * On mobile (<md breakpoint), no left padding is applied since the sidebar is an overlay sheet.
  */
-export function SidebarContentOffset({ children }: { children: React.ReactNode }) {
+export function SidebarContentOffset({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { isExpanded } = useSidebar();
   const [isMd, setIsMd] = React.useState(true);
 
@@ -23,7 +27,11 @@ export function SidebarContentOffset({ children }: { children: React.ReactNode }
     return () => mq.removeEventListener('change', handler);
   }, []);
 
-  const paddingLeft = isMd ? (isExpanded ? EXPANDED_WIDTH : COLLAPSED_WIDTH) : 0;
+  const paddingLeft = isMd
+    ? isExpanded
+      ? EXPANDED_WIDTH
+      : COLLAPSED_WIDTH
+    : 0;
 
   return (
     <motion.main
@@ -37,4 +45,3 @@ export function SidebarContentOffset({ children }: { children: React.ReactNode }
     </motion.main>
   );
 }
-

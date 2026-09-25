@@ -32,7 +32,9 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <SidebarContext.Provider value={{ isExpanded, isMobileOpen, toggle, setMobileOpen }}>
+    <SidebarContext.Provider
+      value={{ isExpanded, isMobileOpen, toggle, setMobileOpen }}
+    >
       {children}
     </SidebarContext.Provider>
   );
