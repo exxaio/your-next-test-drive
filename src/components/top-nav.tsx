@@ -4,6 +4,7 @@ import * as React from 'react';
 import { motion } from 'motion/react';
 import { logoutAction } from '@/lib/auth';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -52,6 +53,7 @@ export function TopNav({ userEmail }: TopNavProps) {
 
       {/* Right actions */}
       <div className="flex items-center gap-2">
+        <LanguageSwitcher />
         <ThemeToggle />
 
         <DropdownMenu>
