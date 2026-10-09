@@ -12,15 +12,28 @@ type SidebarContextValue = {
 const SidebarContext = React.createContext<SidebarContextValue | null>(null);
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [isExpanded, setIsExpanded] = React.useState(
-    () => localStorage.getItem('sidebar-expanded') !== 'false',
-  );
+  const [isExpanded, setIsExpanded] = React.useState(true);
   const [isMobileOpen, setMobileOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem('sidebar-expanded');
+      if (saved !== null) {
+        setIsExpanded(saved !== 'false');
+      }
+    } catch {
+      // Ignore errors when localStorage is disabled or restricted
+    }
+  }, []);
 
   const toggle = React.useCallback(() => {
     setIsExpanded((prev) => {
       const next = !prev;
-      localStorage.setItem('sidebar-expanded', String(next));
+      try {
+        localStorage.setItem('sidebar-expanded', String(next));
+      } catch {
+        // Ignore errors when localStorage is disabled or restricted
+      }
       return next;
     });
   }, []);
