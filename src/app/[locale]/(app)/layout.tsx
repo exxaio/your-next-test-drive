@@ -1,29 +1,38 @@
+import { cookies } from 'next/headers';
 import { getSession } from '@/lib/session';
 import { TopNav } from '@/components/top-nav';
 import { LeftRail } from '@/components/left-rail';
 import { PageTransition } from '@/components/animations';
-import { SidebarProvider } from '@/lib/sidebar-context';
-import { SidebarContentOffset } from '@/components/sidebar-content-offset';
+import {
+  SidebarProvider,
+  SidebarInset,
+} from '@/components/ui/sidebar';
 
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
+  const [session, cookieStore] = await Promise.all([
+    getSession(),
+    cookies(),
+  ]);
+
+  // Honour the persisted cookie (shadcn writes "sidebar_state") so the sidebar
+  // opens in the correct state on SSR without a flash.
+  const sidebarOpen = cookieStore.get('sidebar_state')?.value !== 'false';
 
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen flex-col">
+    <SidebarProvider defaultOpen={sidebarOpen}>
+      <LeftRail />
+      <SidebarInset className="min-h-screen">
         <TopNav userEmail={session?.email} />
-        <LeftRail />
-        {/* SidebarContentOffset handles dynamic left padding based on sidebar state */}
-        <SidebarContentOffset>
-          <div className="mx-auto max-w-3xl p-6">
+        <div className="p-6">
+          <div className="mx-auto max-w-3xl">
             <PageTransition>{children}</PageTransition>
           </div>
-        </SidebarContentOffset>
-      </div>
+        </div>
+      </SidebarInset>
     </SidebarProvider>
   );
 }

@@ -16,7 +16,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { AudioWaveform, LogOut, Settings, User } from 'lucide-react';
+import { SidebarTrigger } from '@/components/ui/sidebar';
+import { LogOut, Settings, User } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { fadeInDown } from '@/lib/motion';
 
@@ -35,18 +36,10 @@ export function TopNav({ userEmail }: TopNavProps) {
       initial="hidden"
       animate="visible"
       variants={fadeInDown}
-      className="bg-background/80 fixed top-0 right-0 left-0 z-50 flex h-14 items-center border-b border-white/8 px-4 backdrop-blur-md"
+      className="sticky top-0 z-40 flex h-14 items-center gap-2 border-b border-white/8 bg-background/80 px-4 backdrop-blur-md"
     >
-      {/* Logo — aligned with left rail width */}
-      <Link
-        href="/dashboard"
-        className="font-heading flex w-56 shrink-0 items-center gap-2.5 font-bold tracking-tight"
-      >
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600">
-          <AudioWaveform className="h-4 w-4 text-white" />
-        </span>
-        <span className="text-base">Voxudio</span>
-      </Link>
+      {/* Sidebar trigger — opens mobile sheet or collapses desktop icon rail */}
+      <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground md:hidden" />
 
       {/* Spacer */}
       <div className="flex-1" />
