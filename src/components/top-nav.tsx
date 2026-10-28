@@ -36,10 +36,10 @@ export function TopNav({ userEmail }: TopNavProps) {
       initial="hidden"
       animate="visible"
       variants={fadeInDown}
-      className="sticky top-0 z-40 flex h-14 items-center gap-2 border-b border-white/8 bg-background/80 px-4 backdrop-blur-md"
+      className="bg-background/80 sticky top-0 z-40 flex h-14 items-center gap-2 border-b border-white/8 px-4 backdrop-blur-md"
     >
       {/* Sidebar trigger — opens mobile sheet or collapses desktop icon rail */}
-      <SidebarTrigger className="-ml-1 text-muted-foreground hover:text-foreground md:hidden" />
+      <SidebarTrigger className="text-muted-foreground hover:text-foreground -ml-1 md:hidden" />
 
       {/* Spacer */}
       <div className="flex-1" />

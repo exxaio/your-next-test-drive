@@ -53,14 +53,14 @@ export function LeftRail() {
     <Sidebar
       id="left-rail"
       collapsible="icon"
-      className="border-r border-white/8 bg-background/95 backdrop-blur-md"
+      className="bg-background/95 border-r border-white/8 backdrop-blur-md"
     >
       {/* Header: logo + collapse trigger */}
       <SidebarHeader className="h-14 flex-row items-center gap-0 border-b border-white/8 p-0">
         {/* Expanded: logo link */}
         <Link
           href="/dashboard"
-          className="group flex flex-1 items-center gap-2.5 overflow-hidden rounded-lg px-3 py-0 outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 group-data-[collapsible=icon]:hidden"
+          className="group flex flex-1 items-center gap-2.5 overflow-hidden rounded-lg px-3 py-0 outline-none group-data-[collapsible=icon]:hidden focus-visible:ring-2 focus-visible:ring-violet-500/50"
         >
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-sm transition-transform group-hover:scale-105">
             <AudioWaveform className="h-4 w-4 text-white" />
@@ -73,14 +73,14 @@ export function LeftRail() {
         {/* Collapsed: icon-only logo */}
         <Link
           href="/dashboard"
-          className="hidden h-14 w-full items-center justify-center rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 group-data-[collapsible=icon]:flex"
+          className="hidden h-14 w-full items-center justify-center rounded-lg outline-none group-data-[collapsible=icon]:flex focus-visible:ring-2 focus-visible:ring-violet-500/50"
         >
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 shadow-sm">
             <AudioWaveform className="h-4 w-4 text-white" />
           </span>
         </Link>
 
-        <SidebarTrigger className="mr-1 shrink-0 text-muted-foreground hover:text-foreground group-data-[collapsible=icon]:hidden" />
+        <SidebarTrigger className="text-muted-foreground hover:text-foreground mr-1 shrink-0 group-data-[collapsible=icon]:hidden" />
       </SidebarHeader>
 
       <SidebarContent className="gap-0 pt-2">

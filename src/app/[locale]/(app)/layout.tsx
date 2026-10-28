@@ -3,20 +3,14 @@ import { getSession } from '@/lib/session';
 import { TopNav } from '@/components/top-nav';
 import { LeftRail } from '@/components/left-rail';
 import { PageTransition } from '@/components/animations';
-import {
-  SidebarProvider,
-  SidebarInset,
-} from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 
 export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [session, cookieStore] = await Promise.all([
-    getSession(),
-    cookies(),
-  ]);
+  const [session, cookieStore] = await Promise.all([getSession(), cookies()]);
 
   // Honour the persisted cookie (shadcn writes "sidebar_state") so the sidebar
   // opens in the correct state on SSR without a flash.

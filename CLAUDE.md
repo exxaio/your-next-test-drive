@@ -1,3 +1,13 @@
+# Project Status: Archived & Deprecated
+
+> [!WARNING]
+> This repository is no longer actively maintained.
+
+A newer, actively maintained version of this project is available here:
+👉 **[exxaio/your-next-webapp](https://github.com/exxaio/your-next-webapp)**
+
+Please update your bookmarks and references accordingly!
+
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
